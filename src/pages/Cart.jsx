@@ -1,0 +1,6 @@
+import React from "react";
+import {Link} from "react-router-dom";
+import {useDispatch,useSelector} from "react-redux";
+import QuantityStepper from "../components/QuantityStepper";
+import {increaseQuantity,decreaseQuantity,removeFromCart} from "../features/cart/cartSlice";
+export default function Cart(){const items=useSelector(s=>s.cart.items);const dispatch=useDispatch();const total=items.reduce((n,x)=>n+x.price*x.quantity,0);return <main className="container"><h1>Your Shopping Cart</h1>{!items.length?<section className="empty"><h2>Your cart is empty</h2><p>Add some products to see them here.</p><Link className="button" to="/">Browse Products</Link></section>:<div className="cartlayout"><section>{items.map(x=><article className="cartitem" key={x.id}><img src={x.image} alt={x.title}/><div><h3>{x.title}</h3><p>₹{x.price.toLocaleString("en-IN")}</p><button className="remove" onClick={()=>dispatch(removeFromCart(x.id))}>Remove</button></div><QuantityStepper quantity={x.quantity} onIncrease={()=>dispatch(increaseQuantity(x.id))} onDecrease={()=>dispatch(decreaseQuantity(x.id))}/><b>₹{(x.price*x.quantity).toLocaleString("en-IN")}</b></article>)}</section><aside className="summary"><h2>Order Summary</h2><p>Total: <b>₹{total.toLocaleString("en-IN")}</b></p><button onClick={()=>alert("Order placed successfully!")}>Checkout</button></aside></div>}</main>}

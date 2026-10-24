@@ -1,0 +1,2 @@
+import React from "react";
+export default function QuantityStepper({quantity,onIncrease,onDecrease}){return <div className="stepper"><button onClick={onDecrease}>−</button><span>{quantity}</span><button onClick={onIncrease}>+</button></div>}
